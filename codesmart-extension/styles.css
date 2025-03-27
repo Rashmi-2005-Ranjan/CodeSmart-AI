@@ -1,0 +1,202 @@
+/* styles.css */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    width: 400px;
+    background: linear-gradient(135deg, #232225, #7d44c5);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    transition: background 0.5s ease-in-out;
+}
+
+.container {
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Title Animations */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    animation: slideIn 1s ease-in-out;
+}
+
+h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+/* Input Fields */
+.form-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.844);
+    color: #373636dd;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Glowing effect on focus */
+input:focus,
+textarea:focus,
+select:focus {
+    background: rgba(255, 255, 255, 1);
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scale(1.02);
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #ff6f61, #de4d4d);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Button hover and click effects */
+button:hover {
+    background: linear-gradient(135deg, #6b3dea, #171717);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Logout Button */
+#logout_button {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+}
+
+#logout_button:hover {
+    background: linear-gradient(135deg, #c82333, #dc3545);
+}
+
+/* Animated Response Box */
+.response-container {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 5px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Loading Effect for Responses */
+#response_text {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    white-space: pre-wrap;
+    font-size: 14px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.loading {
+    opacity: 0.5;
+    animation: pulse 1s infinite;
+}
+
+/* Play Button */
+#play_audio_button {
+    background: linear-gradient(135deg, #28a745, #218838);
+}
+
+#play_audio_button:hover {
+    background: linear-gradient(135deg, #218838, #28a745);
+}
+
+/* Toggle Auth */
+#toggle_auth {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+#toggle_auth a {
+    color: #ffeb3b;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+#toggle_auth a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+/* Authentication Message */
+#auth_message {
+    margin-top: 10px;
+    color: #ffeb3b;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.7;
+    }
+}
+
+.btn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    row-gap: 5px;
+}

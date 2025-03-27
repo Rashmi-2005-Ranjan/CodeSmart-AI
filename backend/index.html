@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeSmart Solution with Voice Option</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        .audio-container {
+            margin-top: 10px;
+        }
+        .avatar-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        .avatar.speaking {
+            animation: speak 1s infinite;
+        }
+        @keyframes speak {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .resources-container {
+            margin-top: 20px;
+        }
+        .resources-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .resources-container li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>CodeSmart Solution with Voice Option</h1>
+    <form id="solutionForm">
+        <label for="problem_id">Problem ID (e.g., 1 for Two Sum):</label><br>
+        <input type="text" id="problem_id" name="problem_id" value="1"><br><br>
+
+        <label for="user_code">Your Code (Optional):</label><br>
+        <textarea id="user_code" name="user_code" placeholder="Enter your code here (e.g., Python code)"></textarea><br>
+
+        <button type="button" onclick="getSolution()">Get Solution</button>
+        <button type="button" onclick="getLearningResources()">Get Learning Resources</button>
+    </form>
+
+    <h2>Solution</h2>
+    <div class="avatar-container">
+        <img id="avatar" src="https://via.placeholder.com/100?text=Avatar" alt="Assistant Avatar" class="avatar">
+        <div>
+            <pre id="solution_text">Waiting for solution...</pre>
+            <div class="audio-container">
+                <button id="play_audio_button" onclick="playVoiceSolution()" style="display: none;">Listen to Voice Explanation</button>
+                <audio id="voice_solution" controls style="display: none;">
+                    <source id="audio_source" src="" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+    </div>
+
+    <h2>Learning Resources</h2>
+    <div class="resources-container" id="resources_container">
+        <p>Waiting for learning resources...</p>
+    </div>
+
+    <script>
+        let voiceSolutionUrl = '';
+
+        async function getSolution() {
+            const problemId = document.getElementById("problem_id").value;
+            const userCode = document.getElementById("user_code").value;
+
+            document.getElementById("solution_text").textContent = "Generating solution...";
+            document.getElementById("play_audio_button").style.display = "none";
+            document.getElementById("voice_solution").style.display = "none";
+            document.getElementById("avatar").classList.remove("speaking");
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/assist", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        problem_id: problemId,
+                        request_type: "solution",
+                        user_id: "user123",
+                        user_code: userCode
+                    })
+                });
+
+                const data = await response.json();
+                if (data.error) {
+                    document.getElementById("solution_text").textContent = "Error: " + data.error;
+                    return;
+                }
+
+                document.getElementById("solution_text").textContent = data.solution;
+                voiceSolutionUrl = "http://127.0.0.1:8000" + data.voice_solution_url;
+                document.getElementById("play_audio_button").style.display = "inline-block";
+            } catch (error) {
+                document.getElementById("solution_text").textContent = "Error: Failed to fetch solution. " + error.message;
+            }
+        }
+
+        async function getLearningResources() {
+            const problemId = document.getElementById("problem_id").value;
+
+            document.getElementById("resources_container").innerHTML = "<p>Fetching learning resources...</p>";
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/assist", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        problem_id: problemId,
+                        request_type: "learning_resources",
+                        user_id: "user123"
+                    })
+                });
+
+                const data = await response.json();
+                if (data.error) {
+                    document.getElementById("resources_container").innerHTML = `<p>Error: ${data.error}</p>`;
+                    return;
+                }
+
+                const resources = data.learning_resources;
+                let resourcesHtml = "<ul>";
+                resources.forEach(resource => {
+                    resourcesHtml += `<li><a href="${resource.url}" target="_blank">${resource.description}</a></li>`;
+                });
+                resourcesHtml += "</ul>";
+                document.getElementById("resources_container").innerHTML = resourcesHtml;
+            } catch (error) {
+                document.getElementById("resources_container").innerHTML = `<p>Error: Failed to fetch learning resources. ${error.message}</p>`;
+            }
+        }
+
+        function playVoiceSolution() {
+            const audioElement = document.getElementById("voice_solution");
+            const avatarElement = document.getElementById("avatar");
+
+            audioElement.src = voiceSolutionUrl;
+            audioElement.style.display = "block";
+            audioElement.load();
+            audioElement.play();
+
+            avatarElement.classList.add("speaking");
+
+            audioElement.onended = () => {
+                avatarElement.classList.remove("speaking");
+            };
+        }
+    </script>
+</body>
+</html>

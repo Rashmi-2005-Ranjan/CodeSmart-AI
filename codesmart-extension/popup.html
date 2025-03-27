@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeSmart Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="greeting">CodeSmart Assistant</h1>
+        <button id="logout_button">Logout</button>
+        <form id="assistForm">
+            <div class="form-group">
+                <label for="problem_id">Problem ID:</label>
+                <input type="text" id="problem_id" name="problem_id" placeholder="e.g., 1" required>
+            </div>
+            <div class="form-group">
+                <label for="request_type">Request Type:</label>
+                <select id="request_type" name="request_type">
+                    <option value="hint">Hint</option>
+                    <option value="solution">Solution</option>
+                    <option value="suggestion">Suggestion</option>
+                    <option value="explanation">Problem Explanation</option>
+                    <option value="error_explanation">Error Explanation</option>
+                    <option value="code_insights">Code Insights</option>
+                    <option value="learning_resources">Learning Resources</option>
+                </select>
+            </div>
+            <div class="form-group" id="problem_name_group" style="display: none;">
+                <label for="problem_name">Problem Name:</label>
+                <input type="text" id="problem_name" name="problem_name" placeholder="e.g., Two Sum" required>
+            </div>
+            <div class="form-group" id="user_code_group">
+                <label for="user_code">Your Code (Optional):</label>
+                <textarea id="user_code" name="user_code" placeholder="Paste your code here..."></textarea>
+            </div>
+            <div class="form-group" id="error_message_group" style="display: none;">
+                <label for="error_message">Error Message:</label>
+                <textarea id="error_message" name="error_message" placeholder="Paste the error message here..."></textarea>
+            </div>
+            <button type="submit">Get Assistance</button>
+        </form>
+        <div class="response-container" id="response_container">
+            <h2>Response</h2>
+            <div id="response_text">Waiting for response...</div>
+            <div id="audio_container" style="display: none;">
+                <button id="play_audio_button">Listen to Voice Explanation</button>
+                <audio id="voice_solution" controls style="display: none;">
+                    <source id="audio_source" src="" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

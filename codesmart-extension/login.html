@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeSmart Assistant - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>CodeSmart Assistant</h1>
+        <div id="auth_container">
+            <h2 id="auth_title">Login</h2>
+            <form id="authForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="form-group" id="username_group" style="display: none;">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username">
+                </div>
+                <div class="btn">
+                <button type="submit" id="auth_button">Login</button>
+                <button id="explore">Explore</button>
+                </div>
+                
+            </form>
+            <p id="toggle_auth">
+                Don't have an account? <a href="#" id="toggle_link">Register</a>
+            </p>
+            <div id="auth_message"></div>
+        </div>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>
