@@ -47,7 +47,7 @@ cd CodeSmart
 We welcome contributions! Please fork the repo, create a new branch, and submit a PR.
 
 ## 📬 Contact
-For queries, reach out at **your.email@example.com** or open an issue.
+For queries, reach out at **rbstudu2022@gmail.com** or open an issue.
 
 ---
 🚀 **CodeSmart - Making coding smarter and more intuitive!**
